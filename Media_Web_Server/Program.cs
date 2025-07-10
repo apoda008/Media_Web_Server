@@ -1,5 +1,4 @@
 using Media_Web_Server.Components;
-using Media_Web_Server.Components;
 using System.Diagnostics;
 using System.IO.Pipes; //to open other apps
 using Media_Web_Server.Classes;
@@ -8,31 +7,15 @@ using Media_Web_Server.Classes;
 
 Application.EnableVisualStyles();
 //Application.Run(new MyForm());
-Application.Run(new PanelSwitcherForm());
+
+PanelSwitcherForm pathGetter = new PanelSwitcherForm();
+Application.Run(pathGetter);
+
+
 
 return 0;
 
-const string pipeName = "MediaRepoPipe";
 
-using (var pipeClient = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut))
-{
-    WriteLine("Connecting to client...");
-    pipeClient.Connect(); //blocks until server is ready 
-
-    WriteLine("Connected");
-
-    using (var writer = new StreamWriter(pipeClient) { AutoFlush = true })
-    using (var reader = new StreamReader(pipeClient))
-    {
-        // Send a message to the server
-        writer.WriteLine("Hello from client!");
-
-        // Read response from server
-        //trying to read here but MediaRepo closes
-        string response = reader.ReadLine();
-        Console.WriteLine("Server replied: " + response);
-    }
-}
 
 //Application.EnableVisualStyles();
 //Application.Run(new MyForm());

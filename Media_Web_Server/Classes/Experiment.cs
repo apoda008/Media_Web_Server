@@ -4,12 +4,13 @@ using System.Windows.Forms;
 
 namespace Media_Web_Server.Classes
 {
-    public class PanelSwitcherForm : Form
+    public partial class PanelSwitcherForm : Form
     {
         #region Properties
 
         private Panel homePanel;
         private Panel settingsPanel;
+        public string? path { get; set; } = null;
         //private Button pickFolderButton;
         //private Label selectedPathLabel;
 
@@ -89,7 +90,7 @@ namespace Media_Web_Server.Classes
             Controls.Add(btnInitialize);
             Controls.Add(homePanel);
             Controls.Add(settingsPanel);
-
+            
 
         }
 
@@ -106,6 +107,8 @@ namespace Media_Web_Server.Classes
 
         private void PickFolderButton_Click(object sender, EventArgs e)
         {
+
+
             Thread staThread = new Thread(() => 
             { 
 
@@ -119,11 +122,8 @@ namespace Media_Web_Server.Classes
                 DialogResult result = folderDialog.ShowDialog();
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
-                    string path = folderDialog.SelectedPath;
-                    //selectedPathLabel.Text = "Selected Path: " + path;
-
-                    // Example: write a test file
-                    //System.IO.File.WriteAllText(System.IO.Path.Combine(path, "test.txt"), "Hello folder!");
+                    path = folderDialog.SelectedPath;
+                    OpenPortForPath(path);
                 }
             }
             
@@ -131,7 +131,7 @@ namespace Media_Web_Server.Classes
             });
             staThread.SetApartmentState(ApartmentState.STA);
             staThread.Start();
-            //staThread.Join();
+            staThread.Join();
 
         }
         #endregion
