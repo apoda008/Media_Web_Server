@@ -2,7 +2,15 @@ using Media_Web_Server.Components;
 using Media_Web_Server.Components;
 using System.Diagnostics;
 using System.IO.Pipes; //to open other apps
+using Media_Web_Server.Classes;
 
+//TEMP 
+
+Application.EnableVisualStyles();
+//Application.Run(new MyForm());
+Application.Run(new PanelSwitcherForm());
+
+return 0;
 
 const string pipeName = "MediaRepoPipe";
 
@@ -26,7 +34,8 @@ using (var pipeClient = new NamedPipeClientStream(".", pipeName, PipeDirection.I
     }
 }
 
-
+//Application.EnableVisualStyles();
+//Application.Run(new MyForm());
 
 
 
