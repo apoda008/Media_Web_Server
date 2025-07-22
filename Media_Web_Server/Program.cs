@@ -1,43 +1,9 @@
 using Media_Web_Server.Components;
 using System.Diagnostics;
-using System.IO.Pipes; //to open other apps
-using Media_Web_Server.Classes;
+//using System.IO.Pipes; //to open other apps
 
-//TEMP 
-
-Application.EnableVisualStyles();
-//Application.Run(new MyForm());
-
-PanelSwitcherForm pathGetter = new PanelSwitcherForm();
-Application.Run(pathGetter);
-
-
-
-return 0;
-
-
-
-//Application.EnableVisualStyles();
-//Application.Run(new MyForm());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+using System.Runtime.CompilerServices;
+Connect();
 
 //=======================================================//
 //////////     SERVER STUFF     ///////////////////////////
