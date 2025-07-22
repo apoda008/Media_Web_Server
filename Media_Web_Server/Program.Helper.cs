@@ -20,7 +20,8 @@ partial class Program
             using NetworkStream stream = client.GetStream();
 
             // Send message
-            byte[] requestBytes = Encoding.UTF8.GetBytes(messageToSend);
+            //DONT FORGET NULL TERMINATOR
+            byte[] requestBytes = Encoding.UTF8.GetBytes(messageToSend + '\0');
             await stream.WriteAsync(requestBytes, 0, requestBytes.Length);
 
             // Receive response
@@ -32,7 +33,7 @@ partial class Program
 
             // Parse JSON
             JsonDocument jsonDoc = JsonDocument.Parse(responseJson);
-            if (jsonDoc.RootElement.TryGetProperty("status", out JsonElement statusElement))
+            if (jsonDoc.RootElement.TryGetProperty("title", out JsonElement statusElement))
             {
                 Console.WriteLine($"Status: {statusElement.GetString()}");
             }
