@@ -1,9 +1,14 @@
+using Media_Web_Server;
 using Media_Web_Server.Components;
 using System.Diagnostics;
 //using System.IO.Pipes; //to open other apps
 
 using System.Runtime.CompilerServices;
-Connect();
+//Connect();
+//MediaRepoConnection connect = new MediaRepoConnection();
+
+//await connect.ConnectAsync();
+//var result = connect.jsonResponse;
 
 //=======================================================//
 //////////     SERVER STUFF     ///////////////////////////
@@ -12,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
+builder.Services.AddSingleton<MediaRepoConnection>();
 
 var app = builder.Build();
 
