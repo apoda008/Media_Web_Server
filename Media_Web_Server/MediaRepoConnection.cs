@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Media_Web_Server
 {
-    public class MediaRepoConnection
+    public partial class MediaRepoConnection
     {
         private string? serverIp = "192.168.4.81";
         private int port = 5001;
