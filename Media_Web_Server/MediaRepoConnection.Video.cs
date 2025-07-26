@@ -2,6 +2,10 @@
 using System.Threading.Tasks;
 using System.Text;
 
+//Think I am kind of boned here. Might have to actually implement this in the Razor component
+//since the webpage will need to access each chunk of the video. This may prove difficult to build 
+//outside of the component.
+
 namespace Media_Web_Server
 {
     public partial class MediaRepoConnection
