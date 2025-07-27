@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddRazorComponents();
-builder.Services.AddSingleton<MediaRepoConnection>();
+//builder.Services.AddSingleton<MediaRepoConnection>();
 
 var app = builder.Build();
 app.MapControllers();

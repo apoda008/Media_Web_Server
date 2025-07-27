@@ -1,15 +1,15 @@
 ﻿@page "/"
-@inject MediaRepoConnection MediaRepoConnection
+@*@inject MediaRepoConnection MediaRepoConnection*@
 
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-<p>@jsonResponse</p>
+<p></p>
 
 Welcome to your new app.
 
-@code{
+@*@code{
 	private string? jsonResponse;
 
 	protected override async Task OnInitializedAsync()
@@ -25,4 +25,4 @@ Welcome to your new app.
 		//var response = MediaRepoConnection.jsonResponse;
 	}
 
-}
+}*@

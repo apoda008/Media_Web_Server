@@ -18,15 +18,15 @@
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
       },
-      "https": {
-        "commandName": "Project",
-        "dotnetRunMessages": true,
-        "launchBrowser": true,
-        "applicationUrl": "https://localhost:7177;http://localhost:5161",
-        "environmentVariables": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
+        "https": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "applicationUrl": "https://192.168.4.81:7177;http://192.168.4.81:5161",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
       "IIS Express": {
         "commandName": "IISExpress",
         "launchBrowser": true,
