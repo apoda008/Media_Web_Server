@@ -6,47 +6,80 @@ using System.Text;
 
 namespace VideoStreamServer.Controllers
 {
-
-
-    //THIS ALSO WORKS BUT IT LOADS THE ENTIRE FILE INTO BROWSER BEFORE IT STREAMS
     [Route("[controller]")]
     [ApiController]
     public class StreamController : ControllerBase
     {
-        //NONE BUFFERED IMPLEMENTATION
+        // adjust to whatever chunk size makes sense for you (e.g. 64KB)
+        private const int BufferSize = 64 * 1024;
+
         [HttpGet("{filename}")]
-        public async Task GetVideo()
+        public async Task GetVideo(string filename, CancellationToken cancellationToken)
         {
+            // tell the client it's a stream of unknown total length
             Response.StatusCode = 200;
-            Response.ContentType = "video/mp4";
-            Response.Headers.Add("Accept-Ranges", "none"); // Optional: video won't support scrubbing
+            Response.ContentType = "video/mp4";          // no seeking supported
+            Response.Headers.Add("Accept-Ranges", "bytes");            // seeking?
+            Response.Headers.Add("Transfer-Encoding", "chunked");     // force chunked mode
 
-            // Example: Get stream from external source
-            Stream sourceStream = await GetExternalVideoStreamAsync();
+            // open your TCP connection
+            using var client = new TcpClient();
+            await client.ConnectAsync("192.168.4.81", 5001, cancellationToken);
+            using var sourceStream = client.GetStream();
 
-            if (sourceStream == null)
+            var buffer = new byte[BufferSize];
+            int bytesRead;
+
+            // loop: read a chunk from TCP, write it to the response, flush immediately
+            while ((bytesRead = await sourceStream.ReadAsync(buffer, 0, buffer.Length, cancellationToken)) > 0)
             {
-                Response.StatusCode = 404;
-                await Response.Body.WriteAsync(Encoding.UTF8.GetBytes("Stream not found"));
-                return;
+                await Response.Body.WriteAsync(buffer, 0, bytesRead, cancellationToken);
+                await Response.Body.FlushAsync(cancellationToken);
             }
-
-            // Copy the external stream directly to the HTTP response stream
-            await sourceStream.CopyToAsync(Response.Body);
-            await Response.Body.FlushAsync(); // Ensure all data is pushed
-        }
-
-        // Simulated external video stream (could be a TCP connection, HTTP, or custom protocol)
-        private async Task<Stream> GetExternalVideoStreamAsync()
-        {
-            var client = new TcpClient();
-            await client.ConnectAsync("192.168.4.81", 5001); // Replace with your source server
-
-            NetworkStream stream = client.GetStream();
-            return stream; // Keep the stream open for copying
         }
     }
+
 }
+
+//    //THIS ALSO WORKS BUT IT LOADS THE ENTIRE FILE INTO BROWSER BEFORE IT STREAMS
+//    [Route("[controller]")]
+//    [ApiController]
+//    public class StreamController : ControllerBase
+//    {
+//        //NONE BUFFERED IMPLEMENTATION
+//        [HttpGet("{filename}")]
+//        public async Task GetVideo()
+//        {
+//            Response.StatusCode = 200;
+//            Response.ContentType = "video/mp4";
+//            Response.Headers.Add("Accept-Ranges", "none"); // Optional: video won't support scrubbing
+
+//            // Example: Get stream from external source
+//            Stream sourceStream = await GetExternalVideoStreamAsync();
+
+//            if (sourceStream == null)
+//            {
+//                Response.StatusCode = 404;
+//                await Response.Body.WriteAsync(Encoding.UTF8.GetBytes("Stream not found"));
+//                return;
+//            }
+
+//            // Copy the external stream directly to the HTTP response stream
+//            await sourceStream.CopyToAsync(Response.Body);
+//            await Response.Body.FlushAsync(); // Ensure all data is pushed
+//        }
+
+//        // Simulated external video stream (could be a TCP connection, HTTP, or custom protocol)
+//        private async Task<Stream> GetExternalVideoStreamAsync()
+//        {
+//            var client = new TcpClient();
+//            await client.ConnectAsync("192.168.4.81", 5001); // Replace with your source server
+
+//            NetworkStream stream = client.GetStream();
+//            return stream; // Keep the stream open for copying
+//        }
+//    }
+//}
 
 
 
