@@ -5,12 +5,12 @@
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-<p>@(jsonResponse ?? "Loading....")</p>
+<pre>@(jsonResponse2 ??  "Loading...")</pre>
 
 Welcome to your new app.
 
 @code{
-	private string? jsonResponse;
+	private string? jsonResponse2;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -20,8 +20,8 @@ Welcome to your new app.
 	private async Task FetchData()
 	{
 		await MediaRepoConnection.ConnectAsync();
-		jsonResponse = MediaRepoConnection.rawString;
-		WriteLine($"Response: {jsonResponse}");
+		jsonResponse2 = MediaRepoConnection.rawString;
+		WriteLine($"Response: {jsonResponse2}");
 		//StateHasChanged();
 		//var response = MediaRepoConnection.jsonResponse;
 	}

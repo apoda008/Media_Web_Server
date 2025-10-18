@@ -57,6 +57,7 @@ namespace Media_Web_Server
                 this.rawString = responseJson;
                 
                 SetJsonResponse(responseJson);
+                
                 //return responseJson;
             }
             catch (Exception ex)
@@ -67,6 +68,7 @@ namespace Media_Web_Server
 
         public void SetJsonResponse(string responseJson) 
         { 
+            jsonResponse?.Dispose(); // Dispose previous JsonDocument if exists
             this.jsonResponse = JsonDocument.Parse(responseJson);
         }
 
@@ -79,49 +81,5 @@ namespace Media_Web_Server
             return string.Empty;
         }
 
-        //public void ParseJsonResponse(string responseJson)
-        //{
-        //    try
-        //    {
-        //        JsonDocument jsonDoc = JsonDocument.Parse(responseJson);
-        //        jsonResponse = jsonDoc;
-        //        if(jsonDoc.RootElement.TryGetProperty("title", out JsonElement titleElement))
-        //        {
-        //            Console.WriteLine($"Title: {titleElement.GetString()}");
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("JSON does not contain 'title' field.");
-        //        }
-        //    }
-        //    catch (JsonException ex)
-        //    {
-        //        Console.WriteLine("JSON parsing error: " + ex.Message);
-        //    }
-        //}
-
-        //public async Task StreamFromDatabaseToFFmpeg(Stream videoStream, string rtmpUrl)
-        //{
-        //    var startInfo = new ProcessStartInfo
-        //    {
-        //        FileName = "ffmpeg",
-        //        Arguments = $"-re -i - -c copy -f flv \"{rtmpUrl}\"",  // <-- note the "-" means stdin
-        //        RedirectStandardInput = true,
-        //        RedirectStandardError = true,
-        //        UseShellExecute = false,
-        //        CreateNoWindow = true
-        //    };
-
-        //    using var ffmpeg = new Process { StartInfo = startInfo };
-        //    ffmpeg.Start();
-
-        //    await videoStream.CopyToAsync(ffmpeg.StandardInput.BaseStream);  // push to stdin
-        //    ffmpeg.StandardInput.BaseStream.Close();
-
-        //    string errors = await ffmpeg.StandardError.ReadToEndAsync();  // optional
-        //    Console.WriteLine(errors);
-
-        //    ffmpeg.WaitForExit();
-        //}
     }
 }
