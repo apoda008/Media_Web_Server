@@ -4,19 +4,13 @@ using System.Diagnostics;
 //using System.IO.Pipes; //to open other apps
 
 using System.Runtime.CompilerServices;
-//Connect();
-//MediaRepoConnection connect = new MediaRepoConnection();
-
-//await connect.ConnectAsync();
-//var result = connect.jsonResponse;
-
-//=======================================================//
-//////////     SERVER STUFF     ///////////////////////////
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Add services to the container.
 builder.Services.AddRazorComponents();
+builder.Services.AddScoped<MediaRepoConnection>();  
+
 //builder.Services.AddSingleton<MediaRepoConnection>();
 
 var app = builder.Build();

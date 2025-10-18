@@ -11,7 +11,7 @@ namespace Media_Web_Server
     {
         private string? serverIp = "192.168.4.81";
         private int port = 5001;
-        string? messageToSend = "GET TITLE Firewalker";
+        string? messageToSend = "SELECT%ALL%FROM%MOVIES%WHERE%TITLE%EQUALS%U-571";
         public JsonDocument? jsonResponse;
         public string? rawString;
 
