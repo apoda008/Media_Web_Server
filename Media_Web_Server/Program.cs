@@ -33,3 +33,4 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>();
 
 app.Run();
+//Moving to a new build. I have forgotten most of this and it isnt in the standard MCV template
